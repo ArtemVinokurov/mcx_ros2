@@ -78,6 +78,8 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_configure(const rclc
         printStatus(joint_done);
         throw(std::runtime_error(std::string("Failed to set Manual Joint Mode")));
     }
+
+    
 }   
 
 void MCXHardwareInterface::readData()
