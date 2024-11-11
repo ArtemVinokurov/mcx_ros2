@@ -12,6 +12,7 @@
 #include "hardware_interface/hardware_info.hpp"
 #include "hardware_interface/system_interface.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "hardware_interface/visibility_control.h"
 
 
@@ -64,9 +65,10 @@ protected:
 
 private:
     std::vector<double> joint_positions_;
-    std::vector<double> joint_velocity_;
+    std::vector<double> joint_velocities_;
     std::vector<double> joint_position_commands_;
     std::vector<double> joint_position_commands_old_;
+    std::vector<double> joint_velocities_commands_;
 
     mcx_robot_control::States robot_state_;
     mcx_robot_control::Modes robot_mode_;
@@ -75,7 +77,9 @@ private:
     mcx_cpp::Request req{parameter_tree};
     mcx_cpp::Subscribe sub{req};
     
-    std::unique_ptr<mcx_robot_control::RobotCommand> robot_;
+    std::unique_ptr<mcx_robot_control::RobotCommand> robot_; 
+    auto subscription;
+
 
 
 
