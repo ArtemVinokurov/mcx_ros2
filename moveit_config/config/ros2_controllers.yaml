@@ -1,0 +1,33 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    mcx_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    mcx_joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+
+mcx_arm_controller:
+  ros__parameters:
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+    
+    joints:
+      - pr15_shoulder_pan_joint
+      - pr15_shoulder_lift_joint
+      - pr15_elbow_joint
+      - pr15_wrist1_joint
+      - pr15_wrist2_joint
+      - pr15_wrist3_joint
+
+
+    state_publish_rate: 125.0
+    action_monitor_rate: 100.0
+    allow_integration_in_goal_trajectories: true
+    open_loop_control: false
+    allow_partial_joints_goal: true

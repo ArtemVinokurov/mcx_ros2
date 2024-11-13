@@ -5,21 +5,35 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-set(INLCUDE_DEPENDS
+find_package(ament_cmake REQUIRED)
+find_package(backward_ros REQUIRED)
+find_package(controller_manager REQUIRED)
+find_package(controller_manager_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(hardware_interface REQUIRED)
+find_package(pluginlib REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(rclpy REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+
+include_directories(include)
+
+set(THIS_PACKAGE_INCLUDE_DEPENDS
+  controller_manager
+  controller_manager_msgs
+  geometry_msgs
   hardware_interface
-  control_msgs
-  std_msgs
   pluginlib
   rclcpp
   rclcpp_lifecycle
-  controller_interface
+  std_msgs
+  std_srvs
+  tf2_geometry_msgs
 )
 
-find_package(controller_manager)
-
-if(NOT controller_manager_FOUND)
-  message(FATAL_ERROR "controller_manager package not found")
-endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 
@@ -27,6 +41,55 @@ foreach(Dependency IN ITEMS ${INCLUDE_DEPENDS})
   find_package(${Dependency} REQUIRED)
 endforeach()
 
+
+find_library(NNG NAMES nng)
+find_library(MCX_CPP NAMES mcx-cpp)
+find_library(MCX_ROBOT_CONTROL NAMES mcx-robot-control)
+
+
+add_library(robot_driver_plugin SHARED src/hardware_interface.cpp)
+target_include_directories(robot_driver_plugin PRIVATE include)
+
+ament_target_dependencies(
+  robot_driver_plugin
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${THIS_PACKAGE_INCLUDE_DEPENDS}
+)
+
+target_link_libraries(robot_driver_plugin ${MCX_CPP} ${NNG} ${MCX_ROBOT_CONTROL})
+
+pluginlib_export_plugin_description_file(hardware_interface hardware_interface_plugin.xml)
+
+install(
+  TARGETS robot_driver_plugin
+  DESTINATION lib
+)
+
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+
+ament_export_include_directories(
+  include
+)
+
+ament_export_libraries(
+  robot_driver_plugin
+)
+
+install(
+  DIRECTORY resource
+  DESTINATION share/${PROJECT_NAME}
+)
+
+ament_export_dependencies(
+  hardware_interface
+  pluginlib
+  rclcpp
+  rclcpp_lifecycle
+  ${THIS_PACKAGE_INCLUDE_DEPENDS}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

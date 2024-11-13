@@ -25,19 +25,12 @@
 namespace robot_driver
 {
 
-
-struct RobotData
-{
-    double q_actual[6];
-    double dq_actual[6];
-    mcx_robot_control::States robot_state;
-    mcx_robot_control::Modes robot_mode;
-};
-
 class MCXHardwareInterface : public hardware_interface::SystemInterface
 {
+
+
 public:
-    RCLCPP_SHARED_PTR_DEFINITIONS(MCXHardwareInterface);
+    RCLCPP_SHARED_PTR_DEFINITIONS(MCXHardwareInterface)
     ~MCXHardwareInterface();
     
     hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo& system_info);
@@ -51,16 +44,18 @@ public:
     hardware_interface::return_type read(const rclcpp::Time& time, const rclcpp::Duration& period);
     hardware_interface::return_type write(const rclcpp::Time& time, const rclcpp::Duration& period);
 
-    hardware_interface::return_type prepare_command_mode_switch(const std::vector<std::string>& start_interfaces,
-                                                                const std::vector<std::string>& stop_interfaces);
+    // hardware_interface::return_type prepare_command_mode_switch(const std::vector<std::string>& start_interfaces,
+    //                                                             const std::vector<std::string>& stop_interfaces);
     
-    hardware_interface::return_type perform_command_mode_switch(const std::vector<std::string>& start_interfaces,
-                                                                const std::vector<std::string>& stop_interfaces);
+    // hardware_interface::return_type perform_command_mode_switch(const std::vector<std::string>& start_interfaces,
+    //                                                             const std::vector<std::string>& stop_interfaces);
     
 
 protected:
     void readData();
     void printStatus(const mcx_cpp::Status& status);
+    mcx_robot_control::States getRobotState();
+    mcx_robot_control::Modes getRobotMode();
 
 
 private:
@@ -76,13 +71,11 @@ private:
     mcx_cpp::ParameterTree parameter_tree;
     mcx_cpp::Request req{parameter_tree};
     mcx_cpp::Subscribe sub{req};
-    
     std::unique_ptr<mcx_robot_control::RobotCommand> robot_; 
-    auto subscription;
+    std::unique_ptr<mcx_cpp::Subscription> subscription_;
 
-
-
-
+    bool first_pass_;
+    bool initialized_;
 
 
 };

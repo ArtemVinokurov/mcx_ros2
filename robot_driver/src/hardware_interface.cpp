@@ -20,6 +20,14 @@ void MCXHardwareInterface::printStatus(const mcx_cpp::Status& status)
 }
 
 
+hardware_interface::CallbackReturn MCXHardwareInterface::on_activate(const rclcpp_lifecycle::State& previous_state)
+{
+    RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Activating HW interface");
+    return hardware_interface::CallbackReturn::SUCCESS;
+}
+
+
+
 hardware_interface::CallbackReturn MCXHardwareInterface::on_init(const hardware_interface::HardwareInfo& system_info)
 {
     if (hardware_interface::SystemInterface::on_init(system_info) != hardware_interface::CallbackReturn::SUCCESS) 
@@ -34,8 +42,11 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_init(const hardware_
   joint_position_commands_ = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   joint_velocities_commands_ = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
+  robot_ = nullptr;
   robot_state_ = mcx_robot_control::States::OFF_S;
   robot_mode_ = mcx_robot_control::Modes::PAUSE_M;
+  first_pass_ = true;
+  initialized_ = false;
   
   for (const hardware_interface::ComponentInfo& joint : info_.joints)
   {
@@ -84,8 +95,6 @@ std::vector<hardware_interface::CommandInterface> MCXHardwareInterface::export_c
     return command_interfaces;
 }
 
-
-
 hardware_interface::CallbackReturn MCXHardwareInterface::on_configure(const rclcpp_lifecycle::State& previous_state)
 {
     RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Starting robot driver, wait...");
@@ -100,11 +109,14 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_configure(const rclc
     mcx_cpp::ConnectionOptions options{path_to_cert};
 
     helper::connect(url, options, parameter_tree, req, sub);
-    sub.subscribe({"root/logger/logOut"}, "log", 1).get().notify([](auto params) {
-        std::string log;
-        params[0].value(log);
-        RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Log: %s", log.c_str());
-    });
+    // sub.subscribe({"root/logger/logOut"}, "log", 1).get().notify([](auto params) {
+    //     std::string log;
+    //     params[0].value(log);
+    //     RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Log: %s", log.c_str());
+    // });
+    // RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "!!!!");
+    // mcx_robot_control::RobotCommand robot(req);
+    // RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "DONE");
     robot_ = std::make_unique<mcx_robot_control::RobotCommand>(req);
     robot_->acknowledge();
     robot_->engage();
@@ -123,27 +135,80 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_configure(const rclc
         throw(std::runtime_error(std::string("Failed to set Manual Joint Mode")));
     }
 
-    subscription = sub.subscribe({"root/ManipulatorControl/jointPositionsActual", 
-                                  "root/ManipulatorControl/jointVelocitiesActual",
-                                  "root/ManipulatorControl/jointPositionsTarget"}, "group1", 1).get();
+    subscription_ = std::make_unique<mcx_cpp::Subscription>(sub.subscribe({"root/ManipulatorControl/jointPositionsActual", 
+                                                                           "root/ManipulatorControl/jointVelocitiesActual"}, "group1", 1).get());
 
-    if (subscription.status() == mcx_cpp::StatusCode::OK) 
+    if (subscription_->status() == mcx_cpp::StatusCode::OK) 
     {
         RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Subscribed to a tree parameters");
     } else {
         RCLCPP_ERROR(rclcpp::get_logger("MCXHardwareInterface"), "Failed to subscribe to a tree parameters");
-        printStatus(subscription);
+        printStatus(*subscription_);
     }
 
+      RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "System successfully started!");
+
+      return hardware_interface::CallbackReturn::SUCCESS;
+}
 
 
-    
-}   
-
-void MCXHardwareInterface::readData()
+mcx_robot_control::States MCXHardwareInterface::getRobotState()
 {
-
+    return robot_->getState();
 }
 
 
+mcx_robot_control::Modes MCXHardwareInterface::getRobotMode()
+{
+    return robot_->getMode();
 }
+
+hardware_interface::return_type MCXHardwareInterface::read(const rclcpp::Time& time, const rclcpp::Duration& period)
+{
+    auto parameters = subscription_->read();
+    time_t timestamp{0};
+    for (auto& param : parameters) {
+        std::string param_path = param.path().c_str();
+        if (param_path == "root/ManipulatorControl/jointPositionsActual") {
+            timestamp = param.value(joint_positions_);
+        }
+        else if (param_path == "root/ManipulatorControl/jointVelocitiesActual") {
+            timestamp = param.value(joint_velocities_);
+        }
+    }
+
+    robot_state_ = getRobotState();
+    robot_mode_ = getRobotMode();
+
+    if(first_pass_ && !initialized_) {
+        joint_position_commands_ = joint_position_commands_old_ = joint_positions_;
+        joint_velocities_commands_ = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        initialized_ = true;
+    }
+    return hardware_interface::return_type::OK;
+}
+
+hardware_interface::return_type MCXHardwareInterface::write(const rclcpp::Time& time, const rclcpp::Duration& period)
+{
+    mcx_cpp::StatusReply rep = req.setParameter("root/ManipulatorControl/hostInJointVelocity", joint_velocities_commands_);
+}
+
+
+hardware_interface::CallbackReturn MCXHardwareInterface::on_cleanup(const rclcpp_lifecycle::State& previous_state)
+{
+    RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Stopping robot driver, please wait...");
+    robot_->acknowledge();
+    robot_->disengage();
+    robot_.reset();
+
+    req.close();
+    sub.close();
+    RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "System successfully stopped!");
+    return hardware_interface::CallbackReturn::SUCCESS;
+}
+
+}
+
+#include "pluginlib/class_list_macros.hpp"
+
+PLUGINLIB_EXPORT_CLASS(robot_driver::MCXHardwareInterface, hardware_interface::SystemInterface)

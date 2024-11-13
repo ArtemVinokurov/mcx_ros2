@@ -1,0 +1,9 @@
+<library path="robot_driver_plugin">
+  <class name="robot_driver/MCXHardwareInterface"
+         type="robot_driver::MCXHardwareInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+		ROS2 Control System Driver for Mcx manipulator.
+    </description>
+  </class>
+</library>
