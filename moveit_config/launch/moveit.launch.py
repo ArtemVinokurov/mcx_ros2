@@ -46,7 +46,7 @@ def generate_launch_description():
 
     robot_ip = LaunchConfiguration(robot_ip_parameter_name)
         
-    manipulator_urdf_file = os.path.join(get_package_share_directory('moveit_config'), 'urdf', 'moveit_description.urdf.xacro')
+    manipulator_urdf_file = os.path.join(get_package_share_directory('moveit_config'), 'resource', 'urdf', 'moveit_description.urdf.xacro')
     
     robot_description_config = Command(
         [FindExecutable(name='xacro'), ' ', manipulator_urdf_file])  
@@ -55,7 +55,7 @@ def generate_launch_description():
     robot_description = {'robot_description': robot_description_config}
 
     robot_description_semantic_config = load_file(
-        'manipulator_description', 'resource', 'moveit2', 'pr15.srdf'
+        'arm95_description', 'resource', 'srdf', 'arm95.srdf'
     )
 
 
@@ -64,7 +64,7 @@ def generate_launch_description():
     }
 
     kinematics_yaml = load_yaml(
-        'manipulator_description', 'resource', 'moveit2', 'kinematics.yaml'
+        'moveit_config', 'resource', 'config', 'kinematics.yaml'
     )
 
     ompl_planning_pipeline_config = {
@@ -82,7 +82,7 @@ def generate_launch_description():
 
 
     joint_limits_yaml = load_yaml(
-        'manipulator_description', 'resource', 'moveit2', 'joint_limits.yaml'
+        'moveit_config', 'resource', 'config', 'joint_limits.yaml'
     )
     
     ompl_planning_yaml = load_yaml(
@@ -163,7 +163,7 @@ def generate_launch_description():
 
     ros2_controllers_path = os.path.join(
         get_package_share_directory('moveit_config'),
-        'config',
+        'resource', 'config',
         'ros2_controllers.yaml',
     )
 

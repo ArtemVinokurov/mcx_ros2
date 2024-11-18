@@ -15,7 +15,7 @@ setup(
         ('share/ament_index/resource_index/packages',['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
-        ('share/' + package_name+'/resource/config/', glob('config/*')),
+        ('share/' + package_name+'/resource/config/', glob('resource/config/*')),
         ('share/' + package_name+'/resource/urdf/', glob('urdf/*')),
     ],
     install_requires=['setuptools'],

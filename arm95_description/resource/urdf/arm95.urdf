@@ -3,42 +3,42 @@
     <limit lower="-6.37000" upper="6.37000" effort="143.00000" velocity="3.14000"/>
     <origin rpy="-3.14159 0.00000 0.00000" xyz="0.00000 0.00000 0.09000"/>
     <parent link="Base_link"/>
-    <child link="Link1_link"/>
-    <axis xyz="0.00000 0.00000 1.00000"/>
+    <child link="Link1"/>
+    <axis xyz="0.00000 0.00000 -1.00000"/>
   </joint>
   <joint name="Joint2" type="revolute">
     <limit lower="-6.37000" upper="6.37000" effort="143.00000" velocity="3.14000"/>
     <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 0.09100 -0.08000"/>
-    <parent link="Link1_link"/>
-    <child link="Link2_link"/>
+    <parent link="Link1"/>
+    <child link="Link2"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <joint name="Joint3" type="revolute">
     <limit lower="-6.37000" upper="6.37000" effort="110.00000" velocity="3.14000"/>
     <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.45999 0.01100"/>
-    <parent link="Link2_link"/>
-    <child link="Link3_link"/>
+    <parent link="Link2"/>
+    <child link="Link3"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <joint name="Joint4" type="revolute">
     <limit lower="-6.37000" upper="6.37000" effort="70.00000" velocity="3.14000"/>
     <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.37999 -0.00600"/>
-    <parent link="Link3_link"/>
-    <child link="Link4_link"/>
+    <parent link="Link3"/>
+    <child link="Link4"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <joint name="Joint5" type="revolute">
     <limit lower="-6.37000" upper="6.37000" effort="70.00000" velocity="3.14000"/>
     <origin rpy="-1.57080 0.00000 0.00000" xyz="0.00000 -0.06100 -0.04900"/>
-    <parent link="Link4_link"/>
-    <child link="Link5_link"/>
-    <axis xyz="0.00000 0.00000 1.00000"/>
+    <parent link="Link4"/>
+    <child link="Link5"/>
+    <axis xyz="0.00000 0.00000 -1.00000"/>
   </joint>
   <joint name="Joint6" type="revolute">
     <limit lower="-6.37000" upper="6.37000" effort="70.00000" velocity="3.14000"/>
     <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 0.06100 -0.04900"/>
-    <parent link="Link5_link"/>
-    <child link="Tool_link"/>
+    <parent link="Link5"/>
+    <child link="Link6"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <link name="Base_link">
@@ -105,7 +105,7 @@
     <collision name="Link3_collision">
       <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 -0.00000 -0.00000"/>
       <geometry>
-        <mesh filename="package://arm95_description/resource/meshes/visual/Link3.001.stl" scale="1.00000 1.00000 1.00000"/>
+        <mesh filename="package://arm95_description/resource/meshes/visual/Link3.stl" scale="1.00000 1.00000 1.00000"/>
       </geometry>
     </collision>
     <inertial>
@@ -117,7 +117,7 @@
       <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 -0.00000 -0.00000"/>
       <material name="Base"/>
       <geometry>
-        <mesh filename="package://arm95_description/resource/meshes/visual/Link3.001.stl" scale="1.00000 1.00000 1.00000"/>
+        <mesh filename="package://arm95_description/resource/meshes/visual/Link3.stl" scale="1.00000 1.00000 1.00000"/>
       </geometry>
     </visual>
   </link>
@@ -165,7 +165,7 @@
     <collision name="Link6_collision">
       <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
       <geometry>
-        <mesh filename="package://arm95_description/resource/meshes/visual/Link5.001.stl" scale="1.00000 1.00000 1.00000"/>
+        <mesh filename="package://arm95_description/resource/meshes/visual/Link6.stl" scale="1.00000 1.00000 1.00000"/>
       </geometry>
     </collision>
     <inertial>

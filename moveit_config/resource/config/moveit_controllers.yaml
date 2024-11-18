@@ -16,9 +16,9 @@ mcx_arm_controller:
   type: FollowJointTrajectory
   default: true
   joints:
-    - pr15_shoulder_pan_joint
-    - pr15_shoulder_lift_joint
-    - pr15_elbow_joint
-    - pr15_wrist1_joint
-    - pr15_wrist2_joint
-    - pr15_wrist3_joint
+    - Joint1
+    - Joint2
+    - Joint3
+    - Joint4
+    - Joint5
+    - Joint6

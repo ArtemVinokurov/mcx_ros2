@@ -8,42 +8,42 @@
                 <param name="robot_ip">${robot_ip}</param>
             </hardware>
 
-        <joint name="pr15_shoulder_pan_joint">
+        <joint name="Joint1">
             <state_interface name="position"/>
             <state_interface name="velocity"/>
             <command_interface name="velocity"/>
             <param name="initial_position">0.0</param>
         </joint>
 
-        <joint name="pr15_shoulder_lift_joint">
+        <joint name="Joint2">
             <state_interface name="position"/>
             <state_interface name="velocity"/>
             <command_interface name="velocity"/>
             <param name="initial_position">0.0</param>
         </joint> 
 
-        <joint name="pr15_elbow_joint">
+        <joint name="Joint3">
             <state_interface name="position"/>
             <state_interface name="velocity"/>
             <command_interface name="velocity"/>
             <param name="initial_position">0.0</param>
         </joint> 
 
-        <joint name="pr15_wrist1_joint">
+        <joint name="Joint4">
             <state_interface name="position"/>
             <state_interface name="velocity"/>
             <command_interface name="velocity"/>
             <param name="initial_position">0.0</param>
         </joint> 
 
-        <joint name="pr15_wrist2_joint">
+        <joint name="Joint5">
             <state_interface name="position"/>
             <state_interface name="velocity"/>
             <command_interface name="velocity"/>
             <param name="initial_position">0.0</param>
         </joint> 
 
-        <joint name="pr15_wrist3_joint">
+        <joint name="Joint6">
             <state_interface name="position"/>
             <state_interface name="velocity"/>
             <command_interface name="velocity"/>
