@@ -86,12 +86,12 @@ def generate_launch_description():
     )
     
     ompl_planning_yaml = load_yaml(
-        'manipulator_description', 'resource/moveit2/ompl_planning.yaml'
+        'moveit_config', 'resource/config/ompl_planning.yaml'
     )
     ompl_planning_pipeline_config['move_group'].update(ompl_planning_yaml)
 
     moveit_simple_controllers_yaml = load_yaml(
-        'moveit_config', 'config', 'moveit_controllers.yaml'
+        'moveit_config', 'resource/config/moveit_controllers.yaml'
     )
 
     moveit_controllers = {
@@ -136,7 +136,7 @@ def generate_launch_description():
 
     )
 
-    rviz_base = os.path.join(get_package_share_directory('manipulator_description'), 'resource', 'moveit2')
+    rviz_base = os.path.join(get_package_share_directory('moveit_config'), 'resource', 'config')
     rviz_config = os.path.join(rviz_base, 'moveit.rviz')
 
     rviz_node = Node(
