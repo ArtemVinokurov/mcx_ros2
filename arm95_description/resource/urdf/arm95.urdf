@@ -1,41 +1,41 @@
 <robot name="arm95" version="1.0">
   <joint name="Joint1" type="revolute">
-    <limit lower="-6.37000" upper="6.37000" effort="143.00000" velocity="3.14000"/>
+    <limit lower="-3.14" upper="3.14" effort="143.00000" velocity="3.14000"/>
     <origin rpy="-3.14159 0.00000 0.00000" xyz="0.00000 0.00000 0.09000"/>
     <parent link="Base_link"/>
     <child link="Link1"/>
     <axis xyz="0.00000 0.00000 -1.00000"/>
   </joint>
   <joint name="Joint2" type="revolute">
-    <limit lower="-6.37000" upper="6.37000" effort="143.00000" velocity="3.14000"/>
+    <limit lower="-3.14" upper="3.14" effort="143.00000" velocity="3.14000"/>
     <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 0.09100 -0.08000"/>
     <parent link="Link1"/>
     <child link="Link2"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <joint name="Joint3" type="revolute">
-    <limit lower="-6.37000" upper="6.37000" effort="110.00000" velocity="3.14000"/>
+    <limit lower="-3.14" upper="3.14" effort="110.00000" velocity="3.14000"/>
     <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.45999 0.01100"/>
     <parent link="Link2"/>
     <child link="Link3"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <joint name="Joint4" type="revolute">
-    <limit lower="-6.37000" upper="6.37000" effort="70.00000" velocity="3.14000"/>
+    <limit lower="-3.14" upper="3.14" effort="70.00000" velocity="3.14000"/>
     <origin rpy="0.00000 0.00000 0.00000" xyz="0.00000 -0.37999 -0.00600"/>
     <parent link="Link3"/>
     <child link="Link4"/>
     <axis xyz="0.00000 0.00000 1.00000"/>
   </joint>
   <joint name="Joint5" type="revolute">
-    <limit lower="-6.37000" upper="6.37000" effort="70.00000" velocity="3.14000"/>
+    <limit lower="-3.14" upper="3.14" effort="70.00000" velocity="3.14000"/>
     <origin rpy="-1.57080 0.00000 0.00000" xyz="0.00000 -0.06100 -0.04900"/>
     <parent link="Link4"/>
     <child link="Link5"/>
     <axis xyz="0.00000 0.00000 -1.00000"/>
   </joint>
   <joint name="Joint6" type="revolute">
-    <limit lower="-6.37000" upper="6.37000" effort="70.00000" velocity="3.14000"/>
+    <limit lower="-3.14" upper="3.14" effort="70.00000" velocity="3.14000"/>
     <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 0.06100 -0.04900"/>
     <parent link="Link5"/>
     <child link="Link6"/>
