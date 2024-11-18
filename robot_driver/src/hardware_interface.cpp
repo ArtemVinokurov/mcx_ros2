@@ -109,14 +109,11 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_configure(const rclc
     mcx_cpp::ConnectionOptions options{path_to_cert};
 
     helper::connect(url, options, parameter_tree, req, sub);
-    // sub.subscribe({"root/logger/logOut"}, "log", 1).get().notify([](auto params) {
-    //     std::string log;
-    //     params[0].value(log);
-    //     RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Log: %s", log.c_str());
-    // });
-    // RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "!!!!");
-    // mcx_robot_control::RobotCommand robot(req);
-    // RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "DONE");
+    sub.subscribe({"root/logger/logOut"}, "log", 1).get().notify([](auto params) {
+        std::string log;
+        params[0].value(log);
+        RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Log: %s", log.c_str());
+    });
     robot_ = std::make_unique<mcx_robot_control::RobotCommand>(req);
     robot_->acknowledge();
     robot_->engage();
