@@ -116,7 +116,7 @@ def generate_launch_description():
         'publish_transforms_updates': True,
     }
 
-    use_sim_time = {'use_sim_time': True}
+    use_sim_time = {'use_sim_time': False}
 
     run_move_group_node = Node(
         package='moveit_ros_move_group',
@@ -250,7 +250,8 @@ def generate_launch_description():
         ros2_control_node,
         robot_controller_spawner,
         joint_state_broadcaster_spawner,
-        rviz_node
+        rviz_node,
+        joint_state_publisher
         # delay_joint_state_broadcaster_after_robot_controller_spawner,
         # delay_rviz_after_joint_state_broadcaster_spawner
     ])
