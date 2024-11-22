@@ -201,8 +201,9 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_cleanup(const rclcpp
 {
     RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "Stopping robot driver, please wait...");
     robot_->acknowledge();
+    robot_->off();
     robot_->disengage();
-    robot_.reset();
+    robot_->reset();
 
     req.close();
     sub.close();
