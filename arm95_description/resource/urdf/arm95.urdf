@@ -175,13 +175,17 @@
     </inertial>
     <visual name="Link6">
       <origin rpy="1.57080 0.00000 0.00000" xyz="0.00000 0.00000 0.00000"/>
-      <material name="Base"/>
+      <material name="Steel"/>
       <geometry>
         <mesh filename="package://arm95_description/resource/meshes/visual/Link6.stl" scale="1.00000 1.00000 1.00000"/>
       </geometry>
     </visual>
   </link>
   <material name="Base">
-    <color rgba="0.01961 0.01961 0.01961 1.00000"/>
+    <color rgba="0.3 0.3 0.3 1.00000"/>
+  </material>
+
+  <material name="Steel">
+    <color rgba="0.6 0.6 0.6 1.0"/>
   </material>
 </robot>
