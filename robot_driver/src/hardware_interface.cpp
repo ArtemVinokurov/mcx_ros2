@@ -106,7 +106,7 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_configure(const rclc
     std::string shared_dir = ament_index_cpp::get_package_share_directory("robot_driver");
     std::string path_to_cert = shared_dir + "/resource/mcx.cert.pem";
 
-    mcx_cpp::ConnectionOptions options{path_to_cert};
+    mcx_cpp::ConnectionOptions options{.certificate = path_to_cert, .conn_timeout_ms = 2500, .io_timeout_ms = 200};
 
     helper::connect(url, options, parameter_tree, req, sub);
     // sub.subscribe({"root/logger/logOut"}, "log", 1).get().notify([](auto params) {
@@ -187,7 +187,13 @@ hardware_interface::return_type MCXHardwareInterface::read(const rclcpp::Time& t
 
 hardware_interface::return_type MCXHardwareInterface::write(const rclcpp::Time& time, const rclcpp::Duration& period)
 {
+    if(robot_state_ == mcx_robot_control::States::DISENGAGED_S || robot_mode_ != mcx_robot_control::Modes::MANUAL_JOINT_MODE_M)
+    {
+        on_cleanup(rclcpp_lifecycle::State());
+        on_shutdown(rclcpp_lifecycle::State());
+    }
     mcx_cpp::StatusReply rep = req.setParameter("root/ManipulatorControl/hostInJointVelocity", joint_velocities_commands_);
+    return hardware_interface::return_type::OK;
 }
 
 
@@ -203,6 +209,20 @@ hardware_interface::CallbackReturn MCXHardwareInterface::on_cleanup(const rclcpp
     RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "System successfully stopped!");
     return hardware_interface::CallbackReturn::SUCCESS;
 }
+
+hardware_interface::CallbackReturn MCXHardwareInterface::on_error(const rclcpp_lifecycle::State& previous_state)
+{
+    RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "ON ERROR");
+    const rclcpp_lifecycle::State& state_ = this->get_state();
+    RCLCPP_INFO(rclcpp::get_logger("MCXHardwareInterface"), "%s", state_.label().c_str());
+    return hardware_interface::CallbackReturn::FAILURE;
+}
+
+hardware_interface::CallbackReturn MCXHardwareInterface::on_shutdown(const rclcpp_lifecycle::State& previous_state)
+{
+    return hardware_interface::CallbackReturn::SUCCESS;
+}
+
 
 }
 
