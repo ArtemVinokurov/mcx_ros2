@@ -17,6 +17,7 @@ setup(
         ('share/' + package_name+'/resource/meshes/visual/', glob('resource/meshes/visual/*')),
         ('share/' + package_name+'/resource/meshes/collision/', glob('resource/meshes/collision/*')),
         ('share/' + package_name+'/rviz/', glob('rviz/*')),
+        ('share/' + package_name+'/resource/srdf/', glob('resource/srdf/*')),
         #(os.path.join('share', package_name, 'meshes/dae/'), glob('meshes/dae/*')),
     ],
     install_requires=['setuptools'],

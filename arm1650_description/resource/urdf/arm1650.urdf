@@ -6,7 +6,7 @@
     <joint name="world_fixed" type="fixed">
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
       <parent link="world"/>
-      <child link="arm1650_base_link"/>
+      <child link="Base_link"/>
     </joint>
 
 
@@ -14,11 +14,11 @@
 
     <joint name="tool_frame" type="fixed">
       <origin xyz="0.0 0.0 0.0" rpy="1.57 0 0"/>
-      <parent link="arm1650_wrist3_link"/>
+      <parent link="Link6"/>
       <child link="tool"/>
     </joint>
 
-    <link name="arm1650_base_link">
+    <link name="Base_link">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="4.021"/>
@@ -38,7 +38,7 @@
       </collision>
     </link>
 
-    <link name="arm1650_forearm_link">
+    <link name="Link3">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="2.311"/>
@@ -58,7 +58,7 @@
       </collision>
     </link>
 
-    <link name="arm1650_shoulder_link">
+    <link name="Link1">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="3.661"/>
@@ -78,7 +78,7 @@
       </collision>
     </link>
 
-    <link name="arm1650_upperarm_link">
+    <link name="Link2">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="8.341"/>
@@ -98,7 +98,7 @@
       </collision>
     </link>
 
-    <link name="arm1650_wrist1_link">
+    <link name="Link4">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="1.291"/>
@@ -118,7 +118,7 @@
       </collision>
     </link>
 
-    <link name="arm1650_wrist2_link">
+    <link name="Link5">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="1.291"/>
@@ -138,7 +138,7 @@
       </collision>
     </link>
 
-    <link name="arm1650_wrist3_link">
+    <link name="Link6">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.001"/>
@@ -152,50 +152,53 @@
       </visual>
     </link>
 
-    <joint name="arm1650_elbow_joint" type="revolute">
-      <origin xyz="0 -0.8 0" rpy="0 0 0"/>
-      <parent link="arm1650_upperarm_link"/>
-      <child link="arm1650_forearm_link"/>
-      <axis xyz="0 0 1.0"/>
-      <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
-    </joint>
 
-    <joint name="arm1650_shoulder_pan_joint" type="revolute">
+
+    <joint name="Joint1" type="revolute">
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="arm1650_base_link"/>
-      <child link="arm1650_shoulder_link"/>
+      <parent link="Base_link"/>
+      <child link="Link1"/>
       <axis xyz="0 0 1.0"/>
       <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
     </joint>
 
-    <joint name="arm1650_shoulder_lift_joint" type="revolute">
+    <joint name="Joint2" type="revolute">
       <origin xyz="0 0 0.190" rpy="-1.5708 0 0"/>
-      <parent link="arm1650_shoulder_link"/>
-      <child link="arm1650_upperarm_link"/>
+      <parent link="Link1"/>
+      <child link="Link2"/>
       <axis xyz="0 0 1.0"/>
       <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
     </joint>
 
-    <joint name="arm1650_wrist1_joint" type="revolute">
+
+    <joint name="Joint3" type="revolute">
+      <origin xyz="0 -0.8 0" rpy="0 0 0"/>
+      <parent link="Link2"/>
+      <child link="Link3"/>
+      <axis xyz="0 0 1.0"/>
+      <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
+    </joint>
+
+    <joint name="Joint4" type="revolute">
       <origin xyz="0 -0.72 0" rpy="0 0 0"/>
-      <parent link="arm1650_forearm_link"/>
-      <child link="arm1650_wrist1_link"/>
+      <parent link="Link3"/>
+      <child link="Link4"/>
       <axis xyz="0 0 1.0"/>
       <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
     </joint>
 
-    <joint name="arm1650_wrist2_joint" type="revolute">
+    <joint name="Joint5" type="revolute">
       <origin xyz="0 0 -0.191" rpy="1.5708 0 0"/>
-      <parent link="arm1650_wrist1_link"/>
-      <child link="arm1650_wrist2_link"/>
+      <parent link="Link4"/>
+      <child link="Link5"/>
       <axis xyz="0 0 1.0"/>
       <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
     </joint>
 
-    <joint name="arm1650_wrist3_joint" type="revolute">
+    <joint name="Joint6" type="revolute">
       <origin xyz="0 -0.069 0.130" rpy="0 0 0"/>
-      <parent link="arm1650_wrist2_link"/>
-      <child link="arm1650_wrist3_link"/>
+      <parent link="Link5"/>
+      <child link="Link6"/>
       <axis xyz="0 1.0 0"/>
       <limit lower="-3.14" upper="3.14" effort="0" velocity="0"/>
     </joint>
