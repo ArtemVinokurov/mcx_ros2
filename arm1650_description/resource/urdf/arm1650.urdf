@@ -31,9 +31,9 @@
         </geometry>
       </visual>
       <collision name="base_link">
-        <origin xyz="0 0 0.02559" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://arm1650_description/resource/meshes/collision/base_link_collision.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Base.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -51,9 +51,9 @@
         </geometry>
       </visual>
       <collision name="forearm_link">
-        <origin xyz="0 0 0.0401" rpy="3.14159 0 0"/>
+        <origin xyz="0 0 0.0" rpy="1.5708 0 0"/>
         <geometry>
-          <mesh filename="package://arm1650_description/resource/meshes/collision/forearm_link_collision.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Link3.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -71,9 +71,9 @@
         </geometry>
       </visual>
       <collision name="shoulder_link">
-        <origin xyz="0 -0.06036 0" rpy="1.5708 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://arm1650_description/resource/meshes/collision/shoulder_link_collision.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Link1.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -91,9 +91,9 @@
         </geometry>
       </visual>
       <collision name="upperarm_link">
-        <origin xyz="0 0 -0.09325" rpy="3.14159 0 0"/>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
         <geometry>
-          <mesh filename="package://arm1650_description/resource/meshes/collision/upperarm_link_collision.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Link2.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -111,9 +111,9 @@
         </geometry>
       </visual>
       <collision name="wrist1_link">
-        <origin xyz="0 -0.00465 -0.055" rpy="1.5708 0 0"/>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
         <geometry>
-          <mesh filename="package://arm1650_description/resource/meshes/collision/wrist1_link_collision.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Link4.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -131,9 +131,9 @@
         </geometry>
       </visual>
       <collision name="wrist2_link">
-        <origin xyz="0 -0.00307 0.055" rpy="1.5708 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://arm1650_description/resource/meshes/collision/wrist2_link_collision.stl" scale="1.0 1.0 1.0"/>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Link5.stl" scale="1.0 1.0 1.0"/>
         </geometry>
       </collision>
     </link>
@@ -150,6 +150,12 @@
           <mesh filename="package://arm1650_description/resource/meshes/visual/wrist3_link.dae" scale="1.0 1.0 1.0"/>
         </geometry>
       </visual>
+      <collision name="wrist3_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://arm1650_description/resource/meshes/collision/Link6.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
     </link>
 
 
