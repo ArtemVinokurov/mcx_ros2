@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 import os
 from glob import glob
 
-package_name = 'moveit_config'
+package_name = 'arm95_config'
 
 setup(
     name=package_name,

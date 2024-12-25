@@ -46,7 +46,7 @@ def generate_launch_description():
 
     robot_ip = LaunchConfiguration(robot_ip_parameter_name)
         
-    manipulator_urdf_file = os.path.join(get_package_share_directory('moveit_config'), 'resource', 'urdf', 'moveit_description.urdf.xacro')
+    manipulator_urdf_file = os.path.join(get_package_share_directory('arm95_config'), 'resource', 'urdf', 'moveit_description.urdf.xacro')
     
     robot_description_config = Command(
         [FindExecutable(name='xacro'), ' ', manipulator_urdf_file])  
@@ -64,7 +64,7 @@ def generate_launch_description():
     }
 
     kinematics_yaml = load_yaml(
-        'moveit_config', 'resource', 'config', 'kinematics.yaml'
+        'arm95_config', 'resource', 'config', 'kinematics.yaml'
     )
 
     ompl_planning_pipeline_config = {
@@ -82,16 +82,16 @@ def generate_launch_description():
 
 
     joint_limits_yaml = load_yaml(
-        'moveit_config', 'resource', 'config', 'joint_limits.yaml'
+        'arm95_config', 'resource', 'config', 'joint_limits.yaml'
     )
     
     ompl_planning_yaml = load_yaml(
-        'moveit_config', 'resource/config/ompl_planning.yaml'
+        'arm95_config', 'resource/config/ompl_planning.yaml'
     )
     ompl_planning_pipeline_config['move_group'].update(ompl_planning_yaml)
 
     moveit_simple_controllers_yaml = load_yaml(
-        'moveit_config', 'resource/config/moveit_controllers.yaml'
+        'arm95_config', 'resource/config/moveit_controllers.yaml'
     )
 
     moveit_controllers = {
@@ -136,7 +136,7 @@ def generate_launch_description():
 
     )
 
-    rviz_base = os.path.join(get_package_share_directory('moveit_config'), 'resource', 'config')
+    rviz_base = os.path.join(get_package_share_directory('arm95_config'), 'resource', 'config')
     rviz_config = os.path.join(rviz_base, 'moveit.rviz')
 
     rviz_node = Node(
@@ -162,7 +162,7 @@ def generate_launch_description():
     )
 
     ros2_controllers_path = os.path.join(
-        get_package_share_directory('moveit_config'),
+        get_package_share_directory('arm95_config'),
         'resource', 'config',
         'ros2_controllers.yaml',
     )
