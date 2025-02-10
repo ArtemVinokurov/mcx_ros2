@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<robot name="mcx_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="robot_ip" default="192.168.2.100"/>
+  <xacro:include filename="$(find arm1650_description)/resource/urdf/arm1650.urdf"/>
+  <xacro:include filename="mcx.ros2_control.xacro"/>
+  <xacro:mcx_ros2_control robot_ip="$(arg robot_ip)"/>
+
+
+</robot>
